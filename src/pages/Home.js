@@ -1,4 +1,4 @@
-import React, { useState } from "react"; //useNomeDoHook
+import React, { useEffect, useState } from "react"; //useNomeDoHook
 import 
     {View,
      Text,
@@ -17,6 +17,7 @@ import SkillCard from "../components/SkillCard";
 
          const [newSkill, setNewSkill] = useState('');
          const [mySkills, setMySkills] = useState([]);
+         const [greetings, setGreeting] = useState('');
          
          //Usar o padrão handle quando for lidar com uma ação do usuario, no caso o usuario irá clicar e vai ocorrer a alteração de estado.
 
@@ -27,6 +28,18 @@ import SkillCard from "../components/SkillCard";
          }
 
 
+
+        useEffect(() => {
+            const currentHour = new Date().getHours();
+
+            if(currentHour <12) {
+                setGreeting('Good morning');
+            } else if(currentHour >= 12 && currentHour <18){
+                setGreeting('Good afternoon');
+            }else{
+                setGreeting('Good night');
+            }
+        }, [mySkills])
      return(
          <View style = {styles.container} >
 
@@ -34,6 +47,10 @@ import SkillCard from "../components/SkillCard";
 
                 Welcome, Rodrigo
 
+             </Text>
+
+             <Text style = {styles.greetings}>
+                {greetings}
              </Text>
 
              <TextInput style = {styles.input}
@@ -48,6 +65,7 @@ import SkillCard from "../components/SkillCard";
                  My Skills
              </Text>
 
+         
               <FlatList
               showsVerticalScrollIndicator={false}
                 data={mySkills}
@@ -86,6 +104,10 @@ import SkillCard from "../components/SkillCard";
          marginTop: 30,
          borderRadius: 7
      },
+     greetings: {
+         color: '#fff',
+
+     }
 
  });
 
