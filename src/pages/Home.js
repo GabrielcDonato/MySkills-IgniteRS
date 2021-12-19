@@ -42,7 +42,6 @@ import SkillCard from "../components/SkillCard";
         }, [mySkills])
      return(
          <View style = {styles.container} >
-
              <Text style = {styles.title}>
 
                 Welcome, Rodrigo
