@@ -5,25 +5,34 @@ import
      StyleSheet, 
      TextInput,
      Platform,
-     FlatList,
-     
+     FlatList,     
     } 
      from "react-native";
 
 import { Button } from "../components/Button";
 import SkillCard from "../components/SkillCard";
 
+interface SkillData {
+    id: string;
+    name: string;
+}
+
+
      export function Home(){
 
          const [newSkill, setNewSkill] = useState('');
-         const [mySkills, setMySkills] = useState([]);
+         const [mySkills, setMySkills] = useState<SkillData[]>([]);
+         //SkillData[] pq é um array no caso mais de uma skill então coloca o vetor/array na frente do skill data pra dizer que é uma lista [].
          const [greetings, setGreeting] = useState('');
          
          //Usar o padrão handle quando for lidar com uma ação do usuario, no caso o usuario irá clicar e vai ocorrer a alteração de estado.
 
          function handleAddNewSkill(){
-
-            setMySkills(oldState => [...oldState, newSkill]);
+            const data = {
+                id: String (new Date().getTime()),
+                name: newSkill
+            }
+            setMySkills(oldState => [...oldState, data]);
             // ... 13mins usestate ignite cap 1, 2 conceitos importantes
          }
 
@@ -39,7 +48,7 @@ import SkillCard from "../components/SkillCard";
             }else{
                 setGreeting('Good night');
             }
-        }, [mySkills])
+        }, [])
      return(
          <View style = {styles.container} >
              <Text style = {styles.title}>
@@ -68,9 +77,9 @@ import SkillCard from "../components/SkillCard";
               <FlatList
               showsVerticalScrollIndicator={false}
                 data={mySkills}
-                keyExtractor={item => item}
+                keyExtractor={item => item.id}
                 renderItem={({ item }) =>  (
-                    <SkillCard skill = {item} />
+                    <SkillCard skill = {item.name} />
                 )}
               />
 
