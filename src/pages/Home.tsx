@@ -36,6 +36,12 @@ interface SkillData {
             // ... 13mins usestate ignite cap 1, 2 conceitos importantes
          }
 
+         function handleRemoveSkill(id: string) {
+            setMySkills(oldState => oldState.filter(
+               skill => skill.id !== id
+            ));
+         }
+
 
 
         useEffect(() => {
@@ -67,7 +73,10 @@ interface SkillData {
                         onChangeText = {setNewSkill}      
              />
 
-             <Button onPress = {handleAddNewSkill}/>
+             <Button 
+             title="Add"
+             onPress = {handleAddNewSkill}
+             />
 
              <Text style = {[ styles.title, { marginVertical: 50 }, ]} >
                  My Skills
@@ -79,7 +88,10 @@ interface SkillData {
                 data={mySkills}
                 keyExtractor={item => item.id}
                 renderItem={({ item }) =>  (
-                    <SkillCard skill = {item.name} />
+                    <SkillCard 
+                        skill={item.name}
+                        onPress={() => handleRemoveSkill(item.id)}
+                    />
                 )}
               />
 
